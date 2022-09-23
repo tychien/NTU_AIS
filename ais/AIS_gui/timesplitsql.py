@@ -2,7 +2,6 @@ from datetime import datetime
 from csv import DictReader, DictWriter
 
 
-'''
 global pre_day
 global pre_hour
 class splitByTime():
@@ -13,7 +12,6 @@ def __init__():
     start_time  = '2021-09-01 00:00:01'
     end_time    = '2021-09-01 00:00:32'
     self.splitByTime(start_time, end_time, path)
-'''
 
 def splitByTime(start_time,end_time,readpath,writepath):
     pre_day = None
@@ -36,7 +34,7 @@ def splitByTime(start_time,end_time,readpath,writepath):
                             +':'+str(rec_time_d.minute)
                             +':'+str(rec_time_d.second))
                     pre_day = rec_time_d.day
-                
+
                 elif pre_hour != rec_time_d.hour:
                     print(str(rec_time_d.year)
                             +'-'+str(rec_time_d.month)
@@ -45,7 +43,7 @@ def splitByTime(start_time,end_time,readpath,writepath):
                             +':'+str(rec_time_d.minute)
                             +':'+str(rec_time_d.second))
                     pre_hour = rec_time_d.hour
-                    
+
                 if start_time_d <= rec_time_d <= end_time_d:
                     counter += 1
                     with open(writepath,'a') as wp:
