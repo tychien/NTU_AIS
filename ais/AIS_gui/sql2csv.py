@@ -32,7 +32,7 @@ def sqlToCsv(ORIGFILE,NEWFILE):
             read_obj.seek(0)
             content = read_obj.read()
             
-            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\n"+content)
+            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\tVSD\tVSH\tWMD\tWMS\n"+content)
             #write_obj.write(content)
             HAS_HEADER = True
 
@@ -55,7 +55,7 @@ def sqlToCsv(ORIGFILE,NEWFILE):
 if __name__ == '__main__':
     HOME = os.path.expanduser( '~' )
 
-    orig_path = HOME+'/NTU_AIS/ais/AIS_gui/ais_201306_1.sql'
+    orig_path = HOME+'/NTU_AIS/ais/AIS_gui/ais_201306_2.sql'
     #orig_path = '/Users/tychien/NTU_AIS/ais/AIS_gui/CHe1_5K.csv'
-    new_path  = 'ais_new_1.csv'
+    new_path  = 'ais_new_2.csv'
     sqltest = sqlToCsv(orig_path, new_path)
