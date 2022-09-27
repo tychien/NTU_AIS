@@ -32,7 +32,7 @@ def sqlToCsv(ORIGFILE,NEWFILE):
             read_obj.seek(0)
             content = read_obj.read()
             
-            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\n"+content)
+            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\n"+content)
             #write_obj.write(content)
             HAS_HEADER = True
 
