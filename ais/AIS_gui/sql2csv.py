@@ -21,7 +21,7 @@ def sqlToCsv(ORIGFILE,NEWFILE):
             HAS_HEADER = False
             #print("no header")
         
-        print("Has header") if HAS_HEADER else print("No header")
+        print("Has header") if HAS_HEADER else print("No header.Converting...")
         
         if HAS_HEADER is False:
             #with open(NEWFILE, 'a') as write_csv:
@@ -35,6 +35,7 @@ def sqlToCsv(ORIGFILE,NEWFILE):
             write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\tVSD\tVSH\tWMD\tWMS\n")
             write_obj.write(content)
             HAS_HEADER = True
+            print("Converting Finished")
 
         
     '''
@@ -50,9 +51,12 @@ def sqlToCsv(ORIGFILE,NEWFILE):
 
 
 if __name__ == '__main__':
-    HOME = os.path.expanduser( '~' )
+    convert = sqlToCsv()
 
+    '''
+    HOME = os.path.expanduser( '~' )
     orig_path = HOME+'/NTU_AIS/ais/AIS_gui/ais_201306_2.sql'
     #orig_path = '/Users/tychien/NTU_AIS/ais/AIS_gui/CHe1_5K.csv'
     new_path  = 'ais_new_2.csv'
     sqltest = sqlToCsv(orig_path, new_path)
+    '''

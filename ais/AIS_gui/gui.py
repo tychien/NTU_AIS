@@ -8,6 +8,7 @@ import webbrowser
 import timesplit as sp
 import rangesplit as rs
 import countWithoutMoving as ct
+import sql2csv
 global entry_file_from_ran
 global entry_file_to_ran
 global entry_lat
@@ -20,6 +21,8 @@ global entry_split_FROM
 global entry_split_TO
 global entry_file_TO
 global entry_file_counting
+global entry_sql 
+global entry_csv
 
 class Gui(tk.Tk):
     def browseFile_from_ran(self):
@@ -86,20 +89,38 @@ class Gui(tk.Tk):
         readfile = self.entry_file_counting.get()
         ct.countShip(readfile)
 
+    def browseFile_from_sql(self):
+        file_name = filedialog.askopenfilename()
+        self.entry_sql.delete(0, END)
+        self.entry_sql.insert(0, file_name) 
+
+    def browseFile_to_csv(self):
+        file_name = filedialog.askopenfilename()
+        self.entry_csv.delete(0, END)
+        self.entry_csv.insert(0, file_name)
+
+
+    def convert(self):
+        path_r = self.entry_sql.get()
+        path_w = self.entry_csv.get()
+        sql2csv.sqlToCsv(path_r, path_w)
+
     def __init__(self):
         
         super().__init__()
-        self.title("Select Folder")
-        self.geometry("800x400")
+        self.title("NTU_AIS")
+        self.geometry("700x400")
         self.resizable(0,0)
         self.config(background = "black")
         tabControl = ttk.Notebook(self)
         tab1    = ttk.Frame(tabControl)
         tab2    = ttk.Frame(tabControl)
         tab3    = ttk.Frame(tabControl)
+        tab4    = ttk.Frame(tabControl)
         tabControl.add(tab1,    text= "Split by Range")
         tabControl.add(tab2,    text= "Split by Time")
         tabControl.add(tab3,    text= "Count Ships")
+        tabControl.add(tab4,    text= "sql to csv")
         tabControl.pack(expand = 1, fill = "both")
         ##TAB Range #############################################################
         
@@ -245,7 +266,7 @@ class Gui(tk.Tk):
         button_apply = Button(tab1,
                             text    = "Apply",
                             bg      = 'blue',
-                            fg      = 'white',
+                            fg      = 'black',
                             command = self.getInput).grid(column = 1, row = 6)
 
         
@@ -342,7 +363,7 @@ class Gui(tk.Tk):
         button_file = Button(tab2,
                             text    = "Split File",
                             bg      = "blue",
-                            fg      = "white",
+                            fg      = "black",
                             command = self.splitByTime
                             ).grid(column = 1, 
                                     row = 7,
@@ -385,7 +406,7 @@ class Gui(tk.Tk):
         button_count = Button(tab3,
                             text    = "Count",
                             bg      = "Blue",
-                            fg      = "white",
+                            fg      = "black",
                             command = self.counting
                             ).grid(column = 1, 
                                     row = 3)
@@ -399,6 +420,67 @@ class Gui(tk.Tk):
                             ).grid(column = 3, 
                                     row = 3)
         '''
+         ##TAB sql to csv #############################################################
+ 
+        label_FOLDER = Label(tab4,
+                        text    = "Original sql file",
+                        ).grid(column = 1, 
+                                row = 3, 
+                                ipadx=5, 
+                                pady=5, 
+                                sticky=E)
+
+            #------------------------------------------------------------------
+
+        self.entry_sql = Entry(tab4, width = 20)
+        self.entry_sql.insert(0, "/folder/path/file.csv")
+        self.entry_sql.grid(column = 2, row = 3, columnspan = 3)
+
+            #-------------------------------------------------------------------
+
+        button_exp = Button(tab4,
+                            text    = "Browse File",
+                            bg      = "white",
+                            fg      = "black",
+                            command = self.browseFile_from_sql
+                            ).grid(column = 5, 
+                                    row = 3,
+                                    ipadx = 5,
+                                    pady    = 5,
+                                    sticky=W)
+
+
+
+        label_File_from_sql = Label(tab4, 
+                                text    = "New CSV File Destination",
+                                ).grid(column = 1, 
+                                        row = 4,
+                                        ipadx =5,
+                                        pady = 5,
+                                        sticky = E)
+            #--------------------------------------------------------------------
+        self.entry_csv = Entry(tab4, width = 20)
+        self.entry_csv.insert(0, "/folder/path/file.csv")
+        self.entry_csv.grid(column = 2, row = 4, columnspan = 3)
+            #--------------------------------------------------------------------
+        button_exp_1= Button(tab4, 
+                            text    = "Browse File",
+                            bg      = "white",
+                            fg      = "black",
+                            command = self.browseFile_to_csv
+                            ).grid(column = 5,
+                                    row   = 4,
+                                    ipadx = 5,
+                                    pady  = 5,
+                                    sticky=W)
+                                    
+        #########################################################################
+   
+        button_apply = Button(tab4,
+                            text    = "Apply",
+                            bg      = 'blue',
+                            fg      = 'black',
+                            command = self.convert).grid(column = 1, row = 6)
 
 
 if __name__ == "__main__":
