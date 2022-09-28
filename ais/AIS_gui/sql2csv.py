@@ -32,18 +32,21 @@ def sqlToCsv(ORIGFILE,NEWFILE):
             read_obj.seek(0)
             content = read_obj.read()
             
-            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\tVSD\tVSH\tWMD\tWMS\n"+content)
-            #write_obj.write(content)
+            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\tVSD\tVSH\tWMD\tWMS\n")
+            write_obj.write(content)
             HAS_HEADER = True
 
-        print("shit")
-
+        
+    '''
     with open(NEWFILE, 'r') as read_obj:
         dict_r = DictReader(read_obj, delimiter='\t')
-        for row in dict_r:
-            long = (row['Latitude'])
-            print(long)
+        headers= dict_r.fieldnames
+        print(headers)
 
+        for row in dict_r:
+            time = (row['Record_Time'])
+            #print(time)
+    '''
 
 
 if __name__ == '__main__':
