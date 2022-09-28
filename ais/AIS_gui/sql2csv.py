@@ -46,12 +46,6 @@ def sqlToCsv(ORIGFILE,NEWFILE):
 
 
 
-
-
-        
-
-
-
 if __name__ == '__main__':
     HOME = os.path.expanduser( '~' )
 
