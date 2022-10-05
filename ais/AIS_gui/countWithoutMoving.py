@@ -1,3 +1,5 @@
+from dataclasses import field
+import json
 from pathlib import Path
 from csv import DictReader, DictWriter
 from datetime import datetime
@@ -9,7 +11,8 @@ def countShip(readpath):
     mmsilist = []
     
     dtformat = '%Y-%m-%d %H:%M:%S'
-    with open(readpath,'r') as read_obj:
+    with open(readpath,'r') as read_obj, open('/Users/a9114242/Downloads/report.csv','a') as write_obj:
+        write_obj.write('date,ships\n')
         csv_dict_reader = DictReader(read_obj)
         
         for row in csv_dict_reader:
@@ -51,6 +54,9 @@ def countShip(readpath):
                     mmsilist.append(tmmsi)
             print(date, len(mmsilist))
             countdict[date] = len(mmsilist)
+            write_obj.write(json.dumps(countdict))
+
+                
     print(len(shiplist))
     print(countdict)
 if __name__ == '__main__':

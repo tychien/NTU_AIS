@@ -37,7 +37,7 @@ class Gui(tk.Tk):
 
     def drawMap(self,lat,lon,ran,folder='/home/tychien/mitseagrantauv/ais/AIS_gui'):
         gmapOne = gmplot.GoogleMapPlotter(lat,lon,12)
-        gmapOne.marker(float(lat),float(lon),'blue')
+        gmapOne.marker(float(lat),float(lon),'red')
         gmapOne.circle(lat,lon,ran)
 
         url = folder+"/target.html"
@@ -433,7 +433,7 @@ class Gui(tk.Tk):
             #------------------------------------------------------------------
 
         self.entry_sql = Entry(tab4, width = 20)
-        self.entry_sql.insert(0, "/folder/path/file.csv")
+        self.entry_sql.insert(0, "/folder/path/file.sql")
         self.entry_sql.grid(column = 2, row = 3, columnspan = 3)
 
             #-------------------------------------------------------------------
