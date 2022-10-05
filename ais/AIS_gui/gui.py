@@ -11,6 +11,7 @@ import countWithoutMoving as ct
 import sql2csv
 global entry_file_from_ran
 global entry_file_to_ran
+global path_from_ran
 global entry_lat
 global entry_lon
 global entry_RAN
@@ -19,6 +20,7 @@ global entry_RAN
 global entry_file
 global entry_split_FROM
 global entry_split_TO
+global path_from_split
 global entry_file_TO
 global entry_file_counting
 global entry_sql 
@@ -28,12 +30,15 @@ class Gui(tk.Tk):
     def browseFile_from_ran(self):
         file_name = filedialog.askopenfilename()
         self.entry_file_from_ran.delete(0, END)
-        self.entry_file_from_ran.insert(0, file_name) 
+        self.entry_file_from_ran.insert(0, file_name)
+        self.entry_file_to_ran.delete(0, END)
+        self.entry_file_to_ran.insert(0,self.entry_file_from_ran.get()[0:-4]+"_"+self.entry_RAN.get()+"KM.csv") 
 
     def browseFile_to_ran(self):
         file_name = filedialog.askopenfilename()
         self.entry_file_to_ran.delete(0, END)
         self.entry_file_to_ran.insert(0, file_name)
+        #self.entry_file_to_ran.insert(0, self.entry_file_from_ran.get()[0:-4]+"_"+self.entry_RAN.get()+".csv")
 
     def drawMap(self,lat,lon,ran,folder='/home/tychien/mitseagrantauv/ais/AIS_gui'):
         gmapOne = gmplot.GoogleMapPlotter(lat,lon,12)
@@ -66,6 +71,8 @@ class Gui(tk.Tk):
         file_name = filedialog.askopenfilename()
         self.entry_file.delete(0, END)
         self.entry_file.insert(0, file_name) 
+        self.entry_file_TO.delete(0, END)
+        self.entry_file_TO.insert(0,self.entry_file.get()[0:-4]+".csv") 
     
     def browseFile_TO(self):
         file_name = filedialog.askopenfilename()
@@ -93,6 +100,8 @@ class Gui(tk.Tk):
         file_name = filedialog.askopenfilename()
         self.entry_sql.delete(0, END)
         self.entry_sql.insert(0, file_name) 
+        self.entry_csv.delete(0, END)
+        self.entry_csv.insert(0,self.entry_sql.get()[0:-4]+".csv") 
 
     def browseFile_to_csv(self):
         file_name = filedialog.askopenfilename()
