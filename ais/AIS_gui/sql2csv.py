@@ -3,12 +3,17 @@ import os
 from datetime import datetime
 from csv import DictReader, DictWriter, Sniffer
 
+
+
+
 def sqlToCsv(ORIGFILE,NEWFILE):
-    #check if column exist 
+    ###------check if column exist--------### 
     HAS_HEADER = False
     with open(ORIGFILE,'r') as read_obj, open(NEWFILE, 'a') as write_obj:
         sniffer = Sniffer()
-        has_header = sniffer.has_header(read_obj.read(333333333333))
+        print('start sniffing')
+        has_header = sniffer.has_header(read_obj.read(3000))
+        print('end sniffing')
         read_obj.seek(0)
         dict_r = DictReader(read_obj,delimiter="\t")
         headers= dict_r.fieldnames
@@ -31,11 +36,27 @@ def sqlToCsv(ORIGFILE,NEWFILE):
             #writer.writeheader()
             
             read_obj.seek(0)
-            content = read_obj.read()
+            ### Comment out below if it's a large file (over 1 gb).
+            #content = read_obj.read()
             
+
             write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\tVSD\tVSH\tWMD\tWMS\n")
-            write_obj.write(content)
             HAS_HEADER = True
+            if HAS_HEADER == True:
+                print("it has header now")
+                
+    counter = 0
+    with open(ORIGFILE, 'r') as read_file, open(NEWFILE, 'a') as write_file:
+        try:
+            for line in read_file:
+                counter += 1
+                print(counter)
+                write_file.write(line)
+                
+            ### Comment out below if it's a large file (over 1 gb).
+            #write_obj.write(content)
+        except:
+            pass
             
         '''
         for row in dict_r:
