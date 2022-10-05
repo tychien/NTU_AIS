@@ -32,7 +32,8 @@ def splitByRange(MIC_LAT, MIC_LON,ran, readpath, writepath):
         except:
             print(counter, count, row['Latitude'],readpath, writepath)
         
-        print("Finished!")
+        #print("Finished!")
+        return "Split by Range Finished!"
 if __name__ == '__main__':
     splitbyran = splitByRange()
     #splitbyran = splitByRange(24.09355,120.32448,20000,'/home/tychien/mitseagrantauv/ais/AIS_gui/CHn/CHn_50K_9.csv','/home/tychien/mitseagrantauv/ais/AIS_gui/CHn/CHn_20K_9.csv')

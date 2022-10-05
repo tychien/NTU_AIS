@@ -62,6 +62,7 @@ def splitByTime(start_time,end_time,readpath,writepath):
             print(count, row['Record_Time'],readpath, writepath)
 
         print("Finished")
+        return "Split by Time Finished!"
 
 if __name__ == '__main__':
     split = splitByTime()

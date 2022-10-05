@@ -64,19 +64,8 @@ def sqlToCsv(ORIGFILE,NEWFILE):
         '''
             
         print("Converting Finished")
-
+        return "Converting Complete!"
         
-    '''
-    with open(NEWFILE, 'r') as read_obj:
-        dict_r = DictReader(read_obj, delimiter='\t')
-        headers= dict_r.fieldnames
-        print(headers)
-
-        for row in dict_r:
-            time = (row['Record_Time'])
-            #print(time)
-    '''
-
 
 if __name__ == '__main__':
     convert = sqlToCsv()

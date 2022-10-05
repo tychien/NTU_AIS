@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import ttk
+from tkinter import scrolledtext
 from datetime import datetime
 import tkinter as tk
 import gmplot
@@ -66,7 +67,10 @@ class Gui(tk.Tk):
         #if drawit:
         #    self.drawMap(_lat,_lon,_ran) 
         #    print(_lat, _lon, _ran, _from, _to, _dir)
-        rs.splitByRange(_lat,_lon,_ran,_file_from, _file_to) 
+        finished_ = rs.splitByRange(_lat,_lon,_ran,_file_from, _file_to) 
+        print(finished_)
+        tk.messagebox.showinfo(title='Result',
+                        message=finished_)
 
     def browseFile(self):
         file_name = filedialog.askopenfilename()
@@ -79,7 +83,7 @@ class Gui(tk.Tk):
         time_to     = self.entry_split_TO.get()
         time_to_str   = time_to[0:4]+time_to[5:7]+time_to[8:10]+time_to[11:13]+time_to[14:16]+time_to[17:19]
         self.entry_file_TO.delete(0, END)
-        self.entry_file_TO.insert(0,self.entry_file.get()+"_"+time_from_str+"_TO_"+time_to_str+".csv") 
+        self.entry_file_TO.insert(0,self.entry_file.get()[0:-4]+"_"+time_from_str+"_TO_"+time_to_str+".csv") 
     
     def browseFile_TO(self):
         file_name = filedialog.askopenfilename()
@@ -92,8 +96,11 @@ class Gui(tk.Tk):
         start_time = self.entry_split_FROM.get()
         end_time = self.entry_split_TO.get()
         print
-        sp.splitByTime(start_time, end_time, path_r, path_w)
-    
+        finished_ = sp.splitByTime(start_time, end_time, path_r, path_w)
+        print(finished_)
+        tk.messagebox.showinfo(title='Result',
+                        message=finished_)
+
     def browseFile_counting(self):
         file_name = filedialog.askopenfilename()
         self.entry_file_counting.delete(0, END)
@@ -101,7 +108,12 @@ class Gui(tk.Tk):
 
     def counting(self):
         readfile = self.entry_file_counting.get()
-        ct.countShip(readfile)
+        
+        finished_ = ct.countShip(readfile)
+        print(finished_)
+        tk.messagebox.showinfo(title='Result',
+                        message=finished_)
+
 
     def browseFile_from_sql(self):
         file_name = filedialog.askopenfilename()
@@ -119,7 +131,10 @@ class Gui(tk.Tk):
     def convert(self):
         path_r = self.entry_sql.get()
         path_w = self.entry_csv.get()
-        sql2csv.sqlToCsv(path_r, path_w)
+        finished_ = sql2csv.sqlToCsv(path_r, path_w)
+        print(finished_)
+        tk.messagebox.showinfo(title='Result',
+                        message=finished_)
 
     def __init__(self):
         
@@ -299,6 +314,8 @@ class Gui(tk.Tk):
                             bg      = 'blue',
                             fg      = 'black',
                             command = self.getInput).grid(column = 1, row = 6)
+
+        #################################################################################
 
         
         ##TAB Time#######################################################################

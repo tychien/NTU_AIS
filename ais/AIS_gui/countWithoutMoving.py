@@ -59,6 +59,9 @@ def countShip(readpath):
                 
     print(len(shiplist))
     print(countdict)
+    return_msg = "Counting Complete!\n Total Ships:"+ str(len(shiplist))+ "\n"+str(countdict)
+    return return_msg
+
 if __name__ == '__main__':
     countshipt = countShip()
     #countshipt = countShip(str(Path.home())+'/Downloads/201903test.csv')
