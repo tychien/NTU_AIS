@@ -25,6 +25,8 @@ global entry_split_TO
 global path_from_split
 global entry_file_TO
 global entry_file_counting
+global entry_SPD
+global timeresolution
 global entry_sql 
 global entry_csv
 
@@ -108,8 +110,9 @@ class Gui(tk.Tk):
 
     def counting(self):
         readfile = self.entry_file_counting.get()
-        
-        finished_ = ct.countShip(readfile)
+        speedthreshold = self.entry_SPD.get()
+        #timeresolution = "hr"
+        finished_ = ct.countShip(readfile,speedthreshold,self.timeresolution.get())
         print(finished_)
         tk.messagebox.showinfo(title='Result',
                         message=finished_)
@@ -425,7 +428,7 @@ class Gui(tk.Tk):
                             ).grid(column = 3, 
                                     row = 7)
         '''
-        #---TAB Counting Ships--------
+        ############---TAB Counting Ships--------#################################
         label_Count_R = Label(tab3,
                         text    = "Read File",
                         ).grid(column = 1, 
@@ -450,15 +453,43 @@ class Gui(tk.Tk):
                                     ipadx = 5,
                                     pady    = 5,
                                     sticky=W)
+
+        label_spd = Label(tab3,
+                        text    = "Speed Threshold (knots)",
+                        ).grid(column = 1, 
+                                row = 2, 
+                                ipadx=5, 
+                                pady=5, 
+                                sticky=E)
+            #--------------------------------------------------------------
+        self.entry_SPD = Entry(tab3, width = 20)
+        self.entry_SPD.insert(0, "0.5")
+        self.entry_SPD.grid(column = 2, row = 2, columnspan = 3)        
+
+
+        label_timeresolution = Label(tab3,
+                                    text = "Time Resolution: ",
+                                ).grid(column = 1,
+                                        row = 3,
+                                        ipadx = 5,
+                                        pady = 5,
+                                        sticky = E)
+
+
+        self.timeresolution = StringVar()
+        radiobutton_hr = Radiobutton(tab3, text="Hour", variable=self.timeresolution, value = "hr").grid(column = 2, row = 3)
+        radiobutton_day= Radiobutton(tab3, text="Day" , variable=self.timeresolution, value = "day").grid(column = 3, row = 3)
         
+
         button_count = Button(tab3,
                             text    = "Count",
                             bg      = "Blue",
                             fg      = "black",
                             command = self.counting
                             ).grid(column = 1, 
-                                    row = 3)
-                    
+                                    row = 4)
+
+
         '''                    
         button_exit = Button(tab3,
                             text    = "Exit",
