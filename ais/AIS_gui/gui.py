@@ -15,6 +15,7 @@ global path_from_ran
 global entry_lat
 global entry_lon
 global entry_RAN
+global entry_PosNAME
 #global entry_FROM
 #global entry_TO
 global entry_file
@@ -32,7 +33,7 @@ class Gui(tk.Tk):
         self.entry_file_from_ran.delete(0, END)
         self.entry_file_from_ran.insert(0, file_name)
         self.entry_file_to_ran.delete(0, END)
-        self.entry_file_to_ran.insert(0,self.entry_file_from_ran.get()[0:-4]+"_"+self.entry_RAN.get()+"KM.csv") 
+        self.entry_file_to_ran.insert(0,self.entry_file_from_ran.get()[0:-4]+"_"+self.entry_PosNAME.get()+"_"+self.entry_RAN.get()+"KM.csv") 
 
     def browseFile_to_ran(self):
         file_name = filedialog.askopenfilename()
@@ -71,8 +72,14 @@ class Gui(tk.Tk):
         file_name = filedialog.askopenfilename()
         self.entry_file.delete(0, END)
         self.entry_file.insert(0, file_name) 
+
+
+        time_from = self.entry_split_FROM.get() 
+        time_from_str = time_from[0:4]+time_from[5:7]+time_from[8:10]+time_from[11:13]+time_from[14:16]+time_from[17:19]
+        time_to     = self.entry_split_TO.get()
+        time_to_str   = time_to[0:4]+time_to[5:7]+time_to[8:10]+time_to[11:13]+time_to[14:16]+time_to[17:19]
         self.entry_file_TO.delete(0, END)
-        self.entry_file_TO.insert(0,self.entry_file.get()[0:-4]+".csv") 
+        self.entry_file_TO.insert(0,self.entry_file.get()+"_"+time_from_str+"_TO_"+time_to_str+".csv") 
     
     def browseFile_TO(self):
         file_name = filedialog.askopenfilename()
@@ -176,6 +183,21 @@ class Gui(tk.Tk):
         self.entry_RAN.grid(column = 2, row = 2, columnspan = 3)
 
         ##################################################################
+        label_Pos_name = Label(tab1,
+                        text    = "Position Name",
+                        ).grid(column = 5, 
+                                row = 2, 
+                                ipadx=5, 
+                                pady=5, 
+                                sticky=E)
+            #--------------------------------------------------------------
+        self.entry_PosNAME = Entry(tab1, width = 10)
+        self.entry_PosNAME.insert(0, "A")
+        self.entry_PosNAME.grid(column = 6, row = 2, columnspan = 1)
+
+        ##################################################################
+
+
         '''
         label_FROM = Label(tab1,
                         text    = "From(UTC)",
