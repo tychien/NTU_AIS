@@ -74,7 +74,8 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
                         mmsilist.append(tmmsi)
                 print(dateNtime, len(mmsilist))
                 countdict[dateNtime] = len(mmsilist)
-                write_obj.write(json.dumps(countdict))
+                #write_obj.write(json.dumps(countdict))
+                write_obj.write(str(dateNtime)+','+str(len(mmsilist))+"\n")
 
         if timeresolution == "day": #date
             for date in datedict:
@@ -92,8 +93,8 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
                 print(date, len(mmsilist))
                 print()
                 countdict[date] = len(mmsilist)
-                write_obj.write(json.dumps(countdict))
-
+                #write_obj.write(json.dumps(countdict))
+                write_obj.write(str(date)+','+str(len(mmsilist))+"\n")
                 
     print("There are "+str(len(shiplist))+" ship messages.\n")
     #print(countdict)
