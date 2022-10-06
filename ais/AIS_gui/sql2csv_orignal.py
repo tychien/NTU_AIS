@@ -4,6 +4,8 @@ from datetime import datetime
 from csv import DictReader, DictWriter, Sniffer
 
 
+
+
 def sqlToCsv(ORIGFILE,NEWFILE):
     ###------check if column exist--------### 
     HAS_HEADER = False
@@ -27,32 +29,43 @@ def sqlToCsv(ORIGFILE,NEWFILE):
         print("Has header") if HAS_HEADER else print("No header.Converting...")
         
         if HAS_HEADER is False:
-
+            #with open(NEWFILE, 'a') as write_csv:
+            #fieldnamesHeaders = {'IMO_NUMBER','Call_Sign','ShipName','MMSI','Navigational_Status','ROT','SOG','Position_Accuracy','Longitude','Latitude','COG','True_Heading','Time_Stamp','Communication_Status','Ship_and_Cargo_Type','Reference_Position_A','Reference_Position_B','Reference_Position_C','Reference_Position_D','Fixing_Device','ETA','MAX_Draught','Destination','DTE','Gross_Tonnage'}
+            
+            #writer = DictWriter(write_obj,fieldnames=fieldnamesHeaders, delimiter='\t')
+            #writer.writeheader()
+            
             read_obj.seek(0)
+            ### Comment out below if it's a large file (over 1 gb).
+            #content = read_obj.read()
+            
 
-            write_obj.write("IMO_NUMBER,Call_Sign,ShipName,MMSI,Navigational_Status,ROT,SOG,Position_Accuracy,Longitude,Latitude,COG,True_Heading,Time_Stamp,Communication_Status,Ship_and_Cargo_Type,Reference_Position_A,Reference_Position_B,Reference_Position_C,Reference_Position_D,Fixing_Device,ETA,MAX_Draught,Destination,DTE,Gross_Tonnage,Record_Time,VSD,VSH,WMD,WMS\n")
+            write_obj.write("IMO_NUMBER\tCall_Sign\tShipName\tMMSI\tNavigational_Status\tROT\tSOG\tPosition_Accuracy\tLongitude\tLatitude\tCOG\tTrue_Heading\tTime_Stamp\tCommunication_Status\tShip_and_Cargo_Type\tReference_Position_A\tReference_Position_B\tReference_Position_C\tReference_Position_D\tFixing_Device\tETA\tMAX_Draught\tDestination\tDTE\tGross_Tonnage\tRecord_Time\tVSD\tVSH\tWMD\tWMS\n")
             HAS_HEADER = True
             if HAS_HEADER == True:
                 print("it has header now")
-    
-
-
+                
     counter = 0
     with open(ORIGFILE, 'r') as read_file, open(NEWFILE, 'a') as write_file:
         try:
-            replace_delimiter = ','
             for line in read_file:
-                for element in line:
-                    write_file.write(element.replace('\t',replace_delimiter))
+                #counter += 1
+                #print(counter)
+                write_file.write(line)
                 
+            ### Comment out below if it's a large file (over 1 gb).
+            #write_obj.write(content)
         except:
             pass
+            
+        '''
+        for row in dict_r:
+            write_obj.write(row)
+        '''
             
         print("Converting Finished")
         return "Converting Complete!"
         
-
-
 
 if __name__ == '__main__':
     convert = sqlToCsv()

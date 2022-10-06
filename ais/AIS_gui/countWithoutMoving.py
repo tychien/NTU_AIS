@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from csv import DictReader, DictWriter
 from datetime import datetime
-def countShip(readpath,speedthreshold,timeresolution):
+def countShip(readpath,reportfile,speedthreshold,timeresolution):
     datelist = []
     datedict = {}
     countdict= {}
@@ -12,7 +12,7 @@ def countShip(readpath,speedthreshold,timeresolution):
     mmsilist = []
     
     dtformat = '%Y-%m-%d %H:%M:%S'
-    with open(readpath,'r') as read_obj, open('/Users/a9114242/Downloads/report.csv','a') as write_obj:
+    with open(readpath,'r') as read_obj, open(reportfile,'a') as write_obj:
         write_obj.write('date,ships\n')
         csv_dict_reader = DictReader(read_obj)
         print("timeresolution: "+timeresolution+ " type:" + str(type(timeresolution)))
