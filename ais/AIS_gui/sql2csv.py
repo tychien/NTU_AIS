@@ -3,8 +3,19 @@ import os
 from datetime import datetime
 from csv import DictReader, DictWriter, Sniffer
 
+global NUM_OF_ROWS
 
 def sqlToCsv(ORIGFILE,NEWFILE):
+    print("Counting number of rows...")
+    def countrows():
+        counter = 0
+        with open(ORIGFILE,'r') as read_obj:
+            for line in read_obj:
+                counter += 1
+        return counter 
+    
+    NUM_OF_ROWS = countrows()
+    print("Total rows: ", NUM_OF_ROWS)
     ###------check if column exist--------### 
     HAS_HEADER = False
     with open(ORIGFILE,'r') as read_obj, open(NEWFILE, 'a') as write_obj:
@@ -37,11 +48,14 @@ def sqlToCsv(ORIGFILE,NEWFILE):
     
 
 
-    counter = 0
     with open(ORIGFILE, 'r') as read_file, open(NEWFILE, 'a') as write_file:
+        counter = 0
         try:
             replace_delimiter = ','
             for line in read_file:
+                counter += 1
+                percentage = 100*counter/NUM_OF_ROWS
+                print("{:.2f}% || {}/{}".format(percentage,counter, NUM_OF_ROWS))
                 for element in line:
                     write_file.write(element.replace('\t',replace_delimiter))
                 
