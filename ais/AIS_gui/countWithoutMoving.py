@@ -17,6 +17,7 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
         csv_dict_reader = DictReader(read_obj)
         print("timeresolution: "+timeresolution+ " type:" + str(type(timeresolution)))
         
+        #### Read the csv file and sort them to the seperate date or hour list
         for row in csv_dict_reader:
             shiplist.append(row)
             mmsi= row['MMSI']
@@ -29,7 +30,7 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
             day     = record_time_d.day
             hour    = record_time_d.hour
             date    = str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)
-            dateNtime= str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)+'{:02d}'.format(hour)
+            dateNtime = date+'{:02d}'.format(hour)
             if timeresolution == "hr": #hour
                 if dateNtime in datelist:
                     pass
@@ -55,52 +56,43 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
             day     = record_time_b.day
             hour    = record_time_b.hour
             date    = str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)
-            dateNtime= str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)+'{:02d}'.format(hour)
+            dateNtime = date+'{:02d}'.format(hour)
             if timeresolution == "hr": #hour
                 datedict[dateNtime].append(ship)
             if timeresolution == "day": #date
                 datedict[date].append(ship)
         
-        if timeresolution == "hr": #hour
-            for dateNtime in datedict:
+
+        ########################################################################
+
+
+        def write_ships_report(format): #dateNtime or date 
+            for format in datedict:
                 mmsilist.clear()
-                #print(len(datedict[dateNtime])+1)
-                for i in range(len(datedict[dateNtime])):
-                    print(i,len(datedict[dateNtime]))
-                    tmmsi = datedict[dateNtime][i-1]['MMSI']
+                for i in range(len(datedict[format])):
+                    print(i,len(datedict[format]))
+                    tmmsi = datedict[format][i-1]['MMSI']
                     if tmmsi in mmsilist:
                         pass
                     else:
                         mmsilist.append(tmmsi)
-                print(dateNtime, len(mmsilist))
-                countdict[dateNtime] = len(mmsilist)
-                #write_obj.write(json.dumps(countdict))
-                write_obj.write(str(dateNtime)+','+str(len(mmsilist))+"\n")
+                print(format, len(mmsilist))
+                countdict[format] = len(mmsilist)
+                write_obj.write(str(format)+','+str(len(mmsilist))+"\n")
+
+
+
+        if timeresolution == "hr": #hour
+            write_ships_report(dateNtime)
+
 
         if timeresolution == "day": #date
-            for date in datedict:
-                mmsilist.clear()
-                print(date, len(datedict[date]))
-                #print(len(datedict[date])) #how many ships on that date
-                
-                #print(len(datedict[date])+1)
-                for i in range(len(datedict[date])):
-                    tmmsi = datedict[date][i-1]['MMSI']
-                    if tmmsi in mmsilist:
-                        pass
-                    else:
-                        mmsilist.append(tmmsi)
-                print(date, len(mmsilist))
-                print()
-                countdict[date] = len(mmsilist)
-                #write_obj.write(json.dumps(countdict))
-                write_obj.write(str(date)+','+str(len(mmsilist))+"\n")
-                
+            write_ships_report(date)
+
+
     print("There are "+str(len(shiplist))+" ship messages.\n")
-    #print(countdict)
     return_msg = "Counting Complete!\n Total msgs:" +str(len(shiplist))+"\n"
     for k in countdict.items():
-        #print(k)
         return_msg+= str(k)+"\n"
     return return_msg
 
