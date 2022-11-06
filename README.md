@@ -15,7 +15,7 @@ https://www.python.org/downloads/
 
 2. Download this repository "NTU_AIS"
 
-3. type  pip install gmplot  in cmd (Command Prompt)
+3. type `pip install gmplot` in cmd (Command Prompt)
 
 4. launch gui.py in NTU_AIS/ais/AIS_gui. then you are good to go. 
 
