@@ -17,10 +17,12 @@ https://www.python.org/downloads/
 
 3. type  pip install gmplot  in cmd (Command Prompt)
 
-4. launch gui.py in NTU_AIS/ais. then you are good to go. 
+4. launch gui.py in NTU_AIS/ais/AIS_gui. then you are good to go. 
 
 
 
+
+## Mac and Linux USERS 
 In NTU_AIS/ais/AIS_gui  
 
 ```bash 
