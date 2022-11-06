@@ -9,6 +9,13 @@ pip install gmplot  #install gmplot
 
 ```
 
+## Windows USERS
+1. Download Python IDE 
+https://www.python.org/downloads/
+
+
+
+
 In NTU_AIS/ais/AIS_gui  
 
 ```bash 
