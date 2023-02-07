@@ -349,7 +349,7 @@ class Gui(tk.Tk):
                                     ipadx = 5, 
                                     pady = 5, 
                                     sticky=W)
-        self.entry_split_FROM.insert(0,"2021-09-01 01:25:00")
+        self.entry_split_FROM.insert(0,"2019-05-24 15:25:00")
         ####################################################################
 
         label_splt_TO = Label(tab2,
@@ -363,7 +363,7 @@ class Gui(tk.Tk):
             #---------------------------------------------------------------
         self.entry_split_TO = Entry(tab2, width = 20)
         self.entry_split_TO.grid(column = 2, row = 4, columnspan = 3)
-        self.entry_split_TO.insert(0, "2021-09-01 01:26:00")
+        self.entry_split_TO.insert(0, "2019-05-24 15:30:00")
 
         ########################################################################
         label_FILE_R = Label(tab2,

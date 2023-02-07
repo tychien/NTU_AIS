@@ -12,6 +12,7 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
     mmsilist = []
     
     dtformat = '%Y-%m-%d %H:%M:%S'
+    dtformat2= '%Y/%m/%d %H:%M'
     with open(readpath,'r') as read_obj, open(reportfile,'a') as write_obj:
         write_obj.write('date,ships\n')
         csv_dict_reader = DictReader(read_obj)
@@ -24,7 +25,10 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
             record_time   = row['Record_Time'][:19]
             if record_time == '-1':
                 continue
-            record_time_d = datetime.strptime(record_time,dtformat)
+            try:
+                record_time_d = datetime.strptime(record_time,dtformat)
+            except:
+                record_time_d = datetime.strptime(record_time,dtformat2)
             year    = record_time_d.year
             month   = record_time_d.month
             day     = record_time_d.day
@@ -36,7 +40,6 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
                     pass
                 else:
                     datelist.append(dateNtime)
-
             if timeresolution == "day": #date
                 if date in datelist:
                     pass
@@ -50,7 +53,10 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
             sog             = float(ship['SOG'])
             if record_time == '-1' or sog < float(speedthreshold):
                 continue
-            record_time_b = datetime.strptime(record_time,dtformat)
+            try:
+                record_time_b = datetime.strptime(record_time,dtformat)
+            except:
+                record_time_b = datetime.strptime(record_time,dtformat2)
             year    = record_time_b.year
             month   = record_time_b.month
             day     = record_time_b.day
@@ -64,8 +70,6 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
         
 
         ########################################################################
-
-
         def write_ships_report(format): #dateNtime or date 
             for format in datedict:
                 mmsilist.clear()

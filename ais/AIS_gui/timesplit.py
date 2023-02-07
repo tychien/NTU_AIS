@@ -17,6 +17,7 @@ def splitByTime(start_time,end_time,readpath,writepath):
     pre_day = None
     pre_hour = None
     dtformat    = '%Y-%m-%d %H:%M:%S'
+    dtformat2   = '%Y/%m/%d %H:%M'
     start_time_d= datetime.strptime(start_time,dtformat)
     end_time_d= datetime.strptime(end_time,dtformat)
     counter = 0
@@ -24,26 +25,34 @@ def splitByTime(start_time,end_time,readpath,writepath):
         csv_dict_reader = DictReader(read_obj)
         try:
             for row in csv_dict_reader:
+                #print(row['Record_Time'])
                 count += 1
                 rec_time    = str(row['Record_Time']).split('.')[0]
+                if (rec_time == 'None'):
+                    continue
                 if (rec_time != 'None'):
-                    rec_time_d  = datetime.strptime(rec_time, dtformat)
+                    if (rec_time == ''):
+                        continue
+                    try:
+                        rec_time_d = datetime.strptime(rec_time, dtformat)
+                    except:
+                        rec_time_d = datetime.strptime(rec_time, dtformat2)
                     if pre_day != rec_time_d.day:
                         print(str(rec_time_d.year)
-                                +'-'+str(rec_time_d.month)
-                                +'-'+str(rec_time_d.day)
-                                +' '+str(rec_time_d.hour)
-                                +':'+str(rec_time_d.minute)
-                                +':'+str(rec_time_d.second))
+                            +'-'+str(rec_time_d.month)
+                            +'-'+str(rec_time_d.day)
+                            +' '+str(rec_time_d.hour)
+                            +':'+str(rec_time_d.minute)
+                            +':'+str(rec_time_d.second))
                         pre_day = rec_time_d.day
                     
                     elif pre_hour != rec_time_d.hour:
                         print(str(rec_time_d.year)
-                                +'-'+str(rec_time_d.month)
-                                +'-'+str(rec_time_d.day)
-                                +' '+str(rec_time_d.hour)
-                                +':'+str(rec_time_d.minute)
-                                +':'+str(rec_time_d.second))
+                            +'-'+str(rec_time_d.month)
+                            +'-'+str(rec_time_d.day)
+                            +' '+str(rec_time_d.hour)
+                            +':'+str(rec_time_d.minute)                                
+                            +':'+str(rec_time_d.second))
                         pre_hour = rec_time_d.hour
                         
                     if start_time_d <= rec_time_d <= end_time_d:
@@ -59,7 +68,7 @@ def splitByTime(start_time,end_time,readpath,writepath):
                         #    print('new file saved in '+ writepath)
                         #    break
         except:
-            print(count, row['Record_Time'],readpath, writepath)
+            print('ERROR_TimeSplit',count, row['Record_Time'],readpath, writepath)
 
         print("Finished")
         return "Split by Time Finished!"
