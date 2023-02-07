@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import scrolledtext
 from datetime import datetime
 import tkinter as tk
-import gmplot
+#import gmplot
 import webbrowser
 import timesplit as sp
 import rangesplit as rs
@@ -44,7 +44,7 @@ class Gui(tk.Tk):
         self.entry_file_to_ran.delete(0, END)
         self.entry_file_to_ran.insert(0, file_name)
         #self.entry_file_to_ran.insert(0, self.entry_file_from_ran.get()[0:-4]+"_"+self.entry_RAN.get()+".csv")
-
+    '''
     def drawMap(self,lat,lon,ran,folder='/home/tychien/mitseagrantauv/ais/AIS_gui'):
         gmapOne = gmplot.GoogleMapPlotter(lat,lon,12)
         gmapOne.marker(float(lat),float(lon),'red')
@@ -56,6 +56,7 @@ class Gui(tk.Tk):
             webbrowser.open(url)
         else:
             print("please fill in the path")
+    '''
 
     def getInput(self):
         _lat = self.entry_lat.get()
