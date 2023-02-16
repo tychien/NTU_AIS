@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from csv import DictReader, DictWriter
 from datetime import datetime
+import sys
+
 def countShip(readpath,reportfile,speedthreshold,timeresolution):
     datelist = []
     datedict = {}
@@ -23,50 +25,63 @@ def countShip(readpath,reportfile,speedthreshold,timeresolution):
             shiplist.append(row)
             mmsi= row['MMSI']
             record_time   = row['Record_Time'][:19]
-            if record_time == '-1':
+            if record_time == 'None':
                 continue
-            try:
-                record_time_d = datetime.strptime(record_time,dtformat)
-            except:
-                record_time_d = datetime.strptime(record_time,dtformat2)
-            year    = record_time_d.year
-            month   = record_time_d.month
-            day     = record_time_d.day
-            hour    = record_time_d.hour
-            date    = str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)
-            dateNtime = date+'{:02d}'.format(hour)
-            if timeresolution == "hr": #hour
-                if dateNtime in datelist:
-                    pass
-                else:
-                    datelist.append(dateNtime)
-            if timeresolution == "day": #date
-                if date in datelist:
-                    pass
-                else:
-                    datelist.append(date)
-        print(datelist)
-        datedict = {key:[] for key in datelist}
+            if record_time == '0':
+                continue
+            if record_time != 'None':
+                if record_time == '':
+                    continue
+                if record_time == '-1':
+                    continue
+
+                try:
+                    record_time_d = datetime.strptime(record_time,dtformat)
+                except:
+                    record_time_d = datetime.strptime(record_time,dtformat2)
+                #print(record_time_d)
+                year    = record_time_d.year
+                month   = record_time_d.month
+                day     = record_time_d.day
+                hour    = record_time_d.hour
+                date    = str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)
+                dateNtime = date+'{:02d}'.format(hour)
+                if timeresolution == "hr": #hour
+                    if dateNtime in datelist:
+                        pass
+                    else:
+                        datelist.append(dateNtime)
+                if timeresolution == "day": #date
+                    if date in datelist:
+                        pass
+                    else:
+                        datelist.append(date)
+            #print(datelist,end="\r")
+            sys.stdout.write('\r'+str(datelist[-1]))
+            datedict = {key:[] for key in datelist}
         
-        for ship in shiplist:
-            record_time     = ship['Record_Time'][:19]
-            sog             = float(ship['SOG'])
-            if record_time == '-1' or sog < float(speedthreshold):
-                continue
-            try:
-                record_time_b = datetime.strptime(record_time,dtformat)
-            except:
-                record_time_b = datetime.strptime(record_time,dtformat2)
-            year    = record_time_b.year
-            month   = record_time_b.month
-            day     = record_time_b.day
-            hour    = record_time_b.hour
-            date    = str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)
-            dateNtime = date+'{:02d}'.format(hour)
-            if timeresolution == "hr": #hour
-                datedict[dateNtime].append(ship)
-            if timeresolution == "day": #date
-                datedict[date].append(ship)
+            for ship in shiplist:
+                record_time     = ship['Record_Time'][:19]
+                sog             = float(ship['SOG'])
+                if record_time == '-1' or sog < float(speedthreshold):
+                    continue
+                try:
+                    record_time_b = datetime.strptime(record_time,dtformat)
+                except:
+                    try:
+                        record_time_b = datetime.strptime(record_time,dtformat2)
+                    except:
+                        continue
+                year    = record_time_b.year
+                month   = record_time_b.month
+                day     = record_time_b.day
+                hour    = record_time_b.hour
+                date    = str(year)+'{:02d}'.format(month)+'{:02d}'.format(day)
+                dateNtime = date+'{:02d}'.format(hour)
+                if timeresolution == "hr": #hour
+                    datedict[dateNtime].append(ship)
+                if timeresolution == "day": #date
+                    datedict[date].append(ship)
         
 
         ########################################################################
